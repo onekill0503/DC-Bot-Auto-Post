@@ -56,7 +56,7 @@ class MyClient(discord.Client):
           try:      
             await chan.send(word)
             last_word[channel_data[0]["channel_name"]] = word
-            print(chalk.green("[SUCCESS] ") + "Sent ["+ chalk.green('word') +"] at " + channel_data[0]["channel_name"] + "...")
+            print(chalk.green("[SUCCESS] ") + "Sent ["+ chalk.green(word) +"] at " + channel_data[0]["channel_name"] + "...")
           except discord.errors.Forbidden:
             print(chalk.red("[ERROR] ") + "You have not access to the channel (Timedout / On Cooldown)")
           except:

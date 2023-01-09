@@ -4,9 +4,9 @@
         "indonesia":"./wordlist/indonesia_wordlist.json"
     },
     "channel": [
-        {"channel_id" : 23456622221,"channel_name":"Example Channel"}
-        
+        {"channel_id" : 1061215230887207003,"channel_name":"Dogonk-general"}
+
     ],
-    "min_timer": 120,
-    "account_token":"<account_token>"
+    "min_timer": 40,
+    "account_token":"ODI3ODU5NjYxNjU0ODUxNjM0.GX-mJj.8UwnM4D5x7DwW-4z2cTkmbkJmG3w-3qFx0PJjU"
 }

@@ -1,8 +1,10 @@
+from __future__ import print_function
 import discord
 import random
 import time
 import numpy as np
 import json
+import chalk
 
 # Load Configuration File
 with open('./conf.json') as f:
@@ -40,8 +42,8 @@ class MyClient(discord.Client):
             with open(config["custom_wordlist"][channel_data[0]["custom_wordlist"]]) as cw:
               custom_word = json.load(cw)
           except FileNotFoundError:
-            print("Can't Find Custom Wordlist file at \n" + config["custom_wordlist"][channel_data[0]["custom_wordlist"]])
-            print("Using Default Wordlist !")
+            print(chalk.yellow("[WARNING] ") + "Can't Find Custom Wordlist file at \n" + config["custom_wordlist"][channel_data[0]["custom_wordlist"]])
+            print(chalk.yellow("[WARNING] ") + "Using Default Wordlist !")
             custom_word = wl
             
           word = np.random.choice(custom_word,size=1)[0]
@@ -50,12 +52,20 @@ class MyClient(discord.Client):
 
         if last_word[channel_data[0]["channel_name"]] != word :
           # Sent Message
-          await chan.send(word)
-          last_word[channel_data[0]["channel_name"]] = word
-          print("Sent new message at " + channel_data[0]["channel_name"] + "...\tWaiting "+ str(delay) +" secs...")
-
+          try:      
+            await chan.send(word)
+            last_word[channel_data[0]["channel_name"]] = word
+            print(chalk.green("[SUCCESS] ") + "Sent ["+ chalk.green('word') +"] at " + channel_data[0]["channel_name"] + "...")
+          except discord.errors.Forbidden:
+            print(chalk.red("[ERROR] ") + "You have not access to the channel (Timedout / On Cooldown)")
+          except:
+            print(chalk.red("[ERROR] ") + "Unknow Error")
           # Create Delay
-          time.sleep(delay)
+          print(chalk.yellow("Waiting "+ str(delay) +" secs..."))
+          try:
+            time.sleep(delay)
+          except KeyboardInterrupt:
+            print(chalk.yellow("[WARNING] " + "Program Exited !"))
 
 client = MyClient()
 client.run(config["account_token"], bot=False)

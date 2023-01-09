@@ -1,4 +1,4 @@
-discord
+discord==1.7.3
 discord.py==1.7.3
 numpy<1.23.0,>=1.16.5
 requests

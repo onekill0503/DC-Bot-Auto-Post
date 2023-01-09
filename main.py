@@ -5,6 +5,7 @@ import time
 import numpy as np
 import json
 import chalk
+import os
 
 # Load Configuration File
 with open('./conf.json') as f:
@@ -26,7 +27,7 @@ class MyClient(discord.Client):
       # Running the Bot
       while (True):
         # Get Delay timer by range min_timer - max_timer (min_timer + 2 minutes)
-        delay = random.randrange(config["min_timer"], (config["min_timer"] + (60*1.5) ))
+        delay = random.randrange(config["min_timer"], (config["min_timer"] + int(60*1.5) ))
 
         # Getting channel data
         channel_data = np.random.choice(config["channel"],size=1)
@@ -66,6 +67,13 @@ class MyClient(discord.Client):
             time.sleep(delay)
           except KeyboardInterrupt:
             print(chalk.yellow("[WARNING] " + "Program Exited !"))
+            try :
+              exit(0)
+            except SystemExit:
+                os._exit(0)
 
 client = MyClient()
-client.run(config["account_token"], bot=False)
+try:
+  client.run(config["account_token"], bot=False)
+except discord.errors.LoginFailure:
+  print(chalk.red("[ERROR] ") + "Login token is invalid")
